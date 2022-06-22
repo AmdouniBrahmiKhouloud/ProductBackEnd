@@ -6,6 +6,7 @@ import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticatio
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
+@Import(KeycloakSpringBootConfigResolver.class)
 public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
@@ -39,7 +41,8 @@ public class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .anyRequest().permitAll();
-        http.csrf().disable();
+       http.csrf().disable();
+        //.authorizeRequests().antMatchers("/Categorie/retrieve-categorie").hasAnyRole("ProductRealm-admin")
     }
 
     @Bean
